@@ -15,7 +15,7 @@ import {
   getEpicLaunchError,
   getEpicManagedError,
 } from "@renderer/helpers/epic-managed-error";
-import { XCircle } from "lucide-react";
+import { Package, XCircle } from "lucide-react";
 import {
   useDownload,
   useLibrary,
@@ -52,6 +52,7 @@ export function HeroPanelActions() {
     game,
     downloadGame,
     presentation,
+    catalogueGame,
     repacks,
     isGameRunning,
     shop,
@@ -92,6 +93,33 @@ export function HeroPanelActions() {
   } | null>(null);
 
   const { t } = useTranslation("game_details");
+  const steamWorkshopGame = [
+    catalogueGame,
+    { shop, objectId },
+    ...(presentation?.members ?? (game ? [game] : [])),
+  ].find(
+    (identity) =>
+      identity.shop === "steam" &&
+      /^[1-9]\d{0,9}$/.test(identity.objectId ?? "")
+  );
+  const workshopButton = (
+    <Button
+      theme="outline"
+      className="hero-panel-actions__action"
+      disabled={!steamWorkshopGame}
+      title={t(steamWorkshopGame ? "open_workshop" : "workshop_no_steam_id")}
+      onClick={() => {
+        if (steamWorkshopGame) {
+          void window.electron.openExternal(
+            `https://steamcommunity.com/app/${steamWorkshopGame.objectId}/workshop/`
+          );
+        }
+      }}
+    >
+      <Package size={18} />
+      Workshop
+    </Button>
+  );
   const launchGeneration = useRef(0);
   const invalidateLaunch = useCallback(() => {
     launchGeneration.current++;
@@ -481,6 +509,7 @@ export function HeroPanelActions() {
       <>
         {addGameToLibraryButton}
         {showDownloadOptionsButton}
+        {workshopButton}
       </>
     );
   }
@@ -531,6 +560,7 @@ export function HeroPanelActions() {
           </div>
         </Modal>
         {gameActionButton()}
+        {workshopButton}
         <div className="hero-panel-actions__separator" />
         <Button
           onClick={toggleGameFavorite}
@@ -603,5 +633,10 @@ export function HeroPanelActions() {
     );
   }
 
-  return addGameToLibraryButton;
+  return (
+    <>
+      {addGameToLibraryButton}
+      {workshopButton}
+    </>
+  );
 }

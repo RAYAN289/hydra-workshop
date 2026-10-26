@@ -17,6 +17,7 @@
 
   &__container {
     display: flex;
+    flex-wrap: wrap;
     gap: calc(globals.$spacing-unit * 2);
   }
 

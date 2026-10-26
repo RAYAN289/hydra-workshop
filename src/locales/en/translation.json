@@ -1106,7 +1106,9 @@
     "epic_play_offline_description": "Hydra couldn't prepare this Epic launch, so cloud saves weren't restored. You can still start the game in Epic's offline mode.",
     "epic_prerequisites_required": "The game's dependencies could not be prepared. Try again.",
     "epic_update_required": "Update the game through the Epic Games option using the same folder.",
-    "epic_retry": "Try again"
+    "epic_retry": "Try again",
+    "open_workshop": "Open this game’s Steam Workshop in your browser",
+    "workshop_no_steam_id": "Link this game to a Steam catalogue entry to open its Workshop"
   },
   "activation": {
     "title": "Activate Hydra",

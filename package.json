@@ -1,6 +1,6 @@
 {
   "name": "hydra-workshop",
-  "version": "4.1.6-workshop.2",
+  "version": "4.1.6-workshop.3",
   "description": "Community fork of Hydra Launcher with Steam Workshop downloads",
   "main": "./out/main/index.js",
   "author": "Los Broxas",

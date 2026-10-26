@@ -4,6 +4,8 @@ Community fork of [Hydra Launcher](https://github.com/hydralauncher/hydra) with 
 
 ## Use
 
+Each game details page also has a **Workshop** button immediately after **Play** (or the game's current action). It opens that game's Steam Workshop in the default browser, using the current Steam catalogue identity rather than a fixed game ID. Linked non-Steam library entries can use their Steam catalogue identity. The button is disabled if no Steam identity is known. Games without Workshop support may have no items or Workshop page on Steam.
+
 1. Open **Workshop** in the sidebar.
 2. Select **Install SteamCMD**. The app downloads the Windows bootstrap archive directly from Valve and runs its first update.
 3. Paste one Steam Community Workshop item URL, or its numeric published file ID. The page identifies the game automatically before downloading; SteamCMD is not required for this preview.

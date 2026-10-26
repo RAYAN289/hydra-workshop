@@ -579,7 +579,9 @@
     "epic_play_offline": "تشغيل — Offline",
     "epic_prerequisites_required": "اسمح بمتطلبات اللعبة وحاول مجددًا.",
     "epic_update_required": "حدّث اللعبة عبر خيار Epic Games باستخدام المجلد نفسه.",
-    "epic_retry": "حاول مرة أخرى"
+    "epic_retry": "حاول مرة أخرى",
+    "open_workshop": "فتح ورشة Steam الخاصة بهذه اللعبة في المتصفح",
+    "workshop_no_steam_id": "اربط اللعبة بصفحتها في كتالوج Steam لفتح ورشتها"
   },
   "activation": {
     "title": "تفعيل Hydra",
