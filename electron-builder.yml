@@ -1,5 +1,5 @@
-appId: gg.hydralauncher.hydra
-productName: Hydra
+appId: dev.rayan289.hydra.workshop
+productName: Hydra Workshop
 beforePack: scripts/legendary-before-pack.cjs
 afterPack: scripts/legendary-after-pack.cjs
 afterSign: scripts/legendary-after-pack.cjs
@@ -34,7 +34,7 @@ asarUnpack:
   - node_modules/sharp/**
   - node_modules/@img/sharp-libvips-*/**
 win:
-  executableName: Hydra
+  executableName: Hydra Workshop
   extraResources:
     - from: legendary/win32/${arch}
       to: legendary
@@ -126,13 +126,13 @@ linux:
   maintainer: electronjs.org
   category: Game
   mimeTypes:
-    - x-scheme-handler/hydralauncher
+    - x-scheme-handler/hydralauncher-workshop
 appImage:
   artifactName: ${name}-${version}.${ext}
 npmRebuild: false
 publish:
   provider: github
-  owner: hydralauncher
-  repo: hydra
+  owner: RAYAN289
+  repo: hydra-workshop
 electronDownload:
   mirror: https://npmmirror.com/mirrors/electron/

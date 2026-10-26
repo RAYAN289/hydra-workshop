@@ -61,8 +61,8 @@ const { autoUpdater } = updater;
 
 autoUpdater.setFeedURL({
   provider: "github",
-  owner: "hydralauncher",
-  repo: "hydra",
+  owner: "RAYAN289",
+  repo: "hydra-workshop",
 });
 
 autoUpdater.logger = logger;
@@ -83,7 +83,7 @@ i18n.init({
   },
 });
 
-const PROTOCOL = "hydralauncher";
+const PROTOCOL = "hydralauncher-workshop";
 
 // Register the custom schemes as privileged so the renderer can fetch them
 // (supportFetchAPI) and use the results on a canvas without tainting it
@@ -111,7 +111,7 @@ if (process.defaultApp) {
 
 const initializeApp = async () => {
   refreshPortableShortcutLauncher();
-  electronApp.setAppUserModelId("gg.hydralauncher.hydra");
+  electronApp.setAppUserModelId("dev.rayan289.hydra.workshop");
 
   logger.info("Crash dumps directory", app.getPath("crashDumps"));
 
@@ -216,10 +216,10 @@ const initializeApp = async () => {
 
   // Check if starting from a "run" deep link - don't show main window in that case
   const deepLinkArg = process.argv.find((arg) =>
-    arg.startsWith("hydralauncher://")
+    arg.startsWith(`${PROTOCOL}://`)
   );
   const forceBigPicture = process.argv.includes("--big-picture");
-  const isRunDeepLink = deepLinkArg?.startsWith("hydralauncher://run");
+  const isRunDeepLink = deepLinkArg?.startsWith(`${PROTOCOL}://run`);
 
   await loadSocialWindowsBounds();
 
@@ -368,13 +368,11 @@ const handleDeepLinkPath = (uri?: string) => {
 };
 
 app.on("second-instance", (_event, commandLine) => {
-  const deepLink = commandLine.find((arg) =>
-    arg.startsWith("hydralauncher://")
-  );
+  const deepLink = commandLine.find((arg) => arg.startsWith(`${PROTOCOL}://`));
   const forceBigPicture = commandLine.includes("--big-picture");
 
   // Check if this is a "run" deep link - don't show main window in that case
-  const isRunDeepLink = deepLink?.startsWith("hydralauncher://run");
+  const isRunDeepLink = deepLink?.startsWith(`${PROTOCOL}://run`);
 
   if (!isRunDeepLink) {
     if (WindowManager.mainWindow) {

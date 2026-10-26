@@ -4,7 +4,15 @@
 
   <h1 align="center">Hydra Launcher</h1>
 
-  <p align="center">
+## Hydra Workshop — community fork
+
+This fork adds **Steam Workshop downloads through SteamCMD**, with an English/Arabic page, installation from Valve, live output, cancellation and a download-folder button. Open **Workshop** in the sidebar.
+
+See [Workshop setup, limits and development](docs/workshop.md). Windows only in this first version; some games do not allow anonymous downloads. This is an independent community fork of Hydra Launcher.
+
+---
+
+<p align="center">
     <strong>Hydra Launcher is an open-source gaming platform created to be the single tool that you need in order to manage your gaming library. Hydra is written in Node.js (Electron, React, Typescript) and Rust, with libtorrent providing the torrent engine.</strong>
   </p>
 

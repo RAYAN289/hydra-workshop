@@ -722,7 +722,7 @@ export class GameFilesManager {
       objectId: this.objectId,
     });
 
-    return `hydralauncher://run?${query.toString()}`;
+    return `hydralauncher-workshop://run?${query.toString()}`;
   }
 
   private quoteLinuxExecArg(value: string) {

@@ -142,7 +142,8 @@
     "steamgriddb_artwork_reset": "Artwork reset to default",
     "classics_hero_layout_warning": "To display the logo and hero, enable the logo + hero layout on the classic game page.",
     "classics_hero_layout_open_settings": "Open settings",
-    "custom_assets_not_sync": "Your custom artwork will not be synced with your account."
+    "custom_assets_not_sync": "Your custom artwork will not be synced with your account.",
+    "workshop": "Workshop"
   },
   "header": {
     "leaderboards": "Leaderboards",
@@ -192,7 +193,8 @@
     "scan_games_folders_title": "Folders to scan",
     "scan_games_add_folder": "Add folder",
     "scan_games_remove_folder": "Remove folder",
-    "scan_games_folders_hint_manual": "Add at least one folder to scan for games."
+    "scan_games_folders_hint_manual": "Add at least one folder to scan for games.",
+    "workshop": "Workshop"
   },
   "bottom_panel": {
     "reconnecting": "Reconnecting {{title}}…",
@@ -2791,5 +2793,48 @@
     "badge_earned_on": "Earned on {{date}}",
     "badge_since": "Since {{date}}",
     "badge_remaining": "{{amount}} to go"
+  },
+  "workshop": {
+    "title": "Download Workshop items",
+    "description": "Paste a Steam Workshop item link to download its files with SteamCMD. Open the folder to install and manage the mod yourself.",
+    "browse": "Visit Steam Workshop",
+    "loading": "Checking SteamCMD…",
+    "windows_only": "Workshop downloads are currently available on Windows.",
+    "ready": "Installed and ready to download",
+    "setup_description": "Install Valve’s SteamCMD once to start downloading Workshop items.",
+    "install": "Install SteamCMD",
+    "repair": "Reinstall",
+    "link_label": "Workshop item URL or ID",
+    "download": "Send link to SteamCMD",
+    "working": "Working…",
+    "open_folder": "Open download folder",
+    "cancel": "Cancel",
+    "limitations": "Uses anonymous Steam access. Some games require an account or ownership and cannot be downloaded this way. Enter a single item, not a collection. Mods are not installed into games automatically.",
+    "logs": "SteamCMD output",
+    "saved_to": "Download complete. Files saved to:",
+    "destination": "Workshop download folder",
+    "phase": {
+      "idle": "Ready",
+      "installing": "Installing SteamCMD…",
+      "resolving": "Getting item details…",
+      "downloading": "Downloading Workshop item…",
+      "cancelling": "Cancelling…",
+      "completed": "Completed",
+      "failed": "Operation failed",
+      "cancelled": "Cancelled. You can retry the download."
+    },
+    "errors": {
+      "unsupported": "This feature currently requires Windows.",
+      "busy": "Another Workshop operation is running.",
+      "not-installed": "Install SteamCMD first.",
+      "invalid-url": "Enter a valid HTTPS Steam Community Workshop item URL or a numeric item ID.",
+      "unavailable": "Steam could not find this item, or it is private or unavailable.",
+      "collection": "This link is a collection. Open it in Steam Workshop and paste an individual item link.",
+      "network": "Could not reach Steam. Check your connection and try again.",
+      "install-failed": "SteamCMD installation failed. Check the output above and reinstall to retry.",
+      "download-failed": "SteamCMD could not download this item. It may require a Steam account or game ownership, be restricted, or be unavailable. Check the output above.",
+      "connection": "Could not connect to the Workshop service. Reopen this page and try again.",
+      "folder": "Could not open the download folder."
+    }
   }
 }

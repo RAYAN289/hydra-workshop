@@ -4,6 +4,7 @@ import {
   GearIcon,
   HomeIcon,
   BookIcon,
+  PackageIcon,
 } from "@primer/octicons-react";
 
 function LeaderboardsIcon() {
@@ -55,6 +56,11 @@ export const routes = [
     nameKey: "leaderboards",
     isGlobalLeaderboards: true,
     render: () => <LeaderboardsIcon />,
+  },
+  {
+    path: "/workshop",
+    nameKey: "workshop",
+    render: () => <PackageIcon />,
   },
   {
     path: "/settings",

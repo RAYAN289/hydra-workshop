@@ -110,7 +110,8 @@
     "decky_plugin_installation_error": "Error installing Decky plugin: {{error}}",
     "custom_assets_not_sync": "لن تتم مزامنة رسوماتك المخصصة مع حسابك.",
     "confirm": "Confirm",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "workshop": "ورشة المودات"
   },
   "header": {
     "search": "بحث الألعاب",
@@ -138,7 +139,8 @@
     "scan_games_no_results": "We couldn't find any installed games.",
     "scan_games_in_progress": "Scanning your disks for installed games...",
     "scan_games_close": "Close",
-    "scan_games_scan_again": "Scan Again"
+    "scan_games_scan_again": "Scan Again",
+    "workshop": "ورشة المودات"
   },
   "bottom_panel": {
     "no_downloads_in_progress": "لا توجد تنزيلات قيد التقدم",
@@ -1224,5 +1226,48 @@
     "no_friends": "No friends online",
     "try_again": "Something went wrong. Please try again.",
     "copied": "Copied!"
+  },
+  "workshop": {
+    "title": "تحميل عناصر Workshop",
+    "description": "الصق رابط عنصر من Steam Workshop لتحميل ملفاته باستخدام SteamCMD. افتح المجلد لتثبيت المود وإدارة ملفاته بنفسك.",
+    "browse": "زيارة Steam Workshop",
+    "loading": "جارٍ التحقق من SteamCMD…",
+    "windows_only": "تحميل عناصر Workshop متاح حاليًا على ويندوز.",
+    "ready": "مثبّت وجاهز للتحميل",
+    "setup_description": "ثبّت أداة SteamCMD الرسمية من Valve مرة واحدة لبدء تحميل عناصر Workshop.",
+    "install": "تثبيت SteamCMD",
+    "repair": "إعادة التثبيت",
+    "link_label": "رابط عنصر Workshop أو رقمه",
+    "download": "إرسال الرابط إلى SteamCMD",
+    "working": "جارٍ التنفيذ…",
+    "open_folder": "فتح مجلد التحميل",
+    "cancel": "إلغاء",
+    "limitations": "يستخدم دخول Steam المجهول. بعض الألعاب تتطلب حسابًا أو امتلاك اللعبة ولا يمكن تحميل موداتها بهذه الطريقة. أدخل رابط عنصر واحد وليس مجموعة. لن تُثبّت المودات داخل الألعاب تلقائيًا.",
+    "logs": "سجل SteamCMD",
+    "saved_to": "اكتمل التحميل. حُفظت الملفات في:",
+    "destination": "مجلد تحميل Workshop",
+    "phase": {
+      "idle": "جاهز",
+      "installing": "جارٍ تثبيت SteamCMD…",
+      "resolving": "جارٍ جلب بيانات العنصر…",
+      "downloading": "جارٍ تحميل عنصر Workshop…",
+      "cancelling": "جارٍ الإلغاء…",
+      "completed": "اكتملت العملية",
+      "failed": "فشلت العملية",
+      "cancelled": "أُلغيت العملية. يمكنك إعادة محاولة التحميل."
+    },
+    "errors": {
+      "unsupported": "هذه الميزة تتطلب ويندوز حاليًا.",
+      "busy": "هناك عملية Workshop أخرى قيد التنفيذ.",
+      "not-installed": "ثبّت SteamCMD أولًا.",
+      "invalid-url": "أدخل رابط HTTPS صحيحًا لعنصر Workshop من Steam Community أو رقم العنصر.",
+      "unavailable": "تعذّر العثور على العنصر في Steam، أو أن العنصر خاص أو غير متاح.",
+      "collection": "هذا رابط مجموعة. افتح المجموعة في Workshop وانسخ رابط عنصر واحد منها.",
+      "network": "تعذّر الاتصال بـSteam. تحقق من الاتصال وأعد المحاولة.",
+      "install-failed": "فشل تثبيت SteamCMD. راجع السجل أعلاه واضغط إعادة التثبيت للمحاولة مجددًا.",
+      "download-failed": "تعذّر تحميل العنصر عبر SteamCMD. قد يتطلب حساب Steam أو امتلاك اللعبة، أو يكون مقيّدًا أو غير متاح. راجع السجل أعلاه.",
+      "connection": "تعذّر الاتصال بخدمة Workshop. أعد فتح الصفحة وحاول مجددًا.",
+      "folder": "تعذّر فتح مجلد التحميل."
+    }
   }
 }

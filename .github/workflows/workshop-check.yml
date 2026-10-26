@@ -1,0 +1,34 @@
+name: Workshop checks
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "src/**"
+      - "package.json"
+      - "yarn.lock"
+      - ".github/workflows/workshop-check.yml"
+  pull_request:
+    paths:
+      - "src/**"
+      - "package.json"
+      - "yarn.lock"
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    strategy:
+      matrix:
+        os: [windows-2022, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: yarn
+      - run: yarn install --frozen-lockfile --ignore-scripts
+      - run: yarn test:workshop
+      - run: yarn typecheck

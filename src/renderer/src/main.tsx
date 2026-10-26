@@ -31,6 +31,7 @@ import { levelDBService } from "./services/leveldb.service";
 import Catalogue from "./pages/catalogue/catalogue";
 import Home from "./pages/home/home";
 import Downloads from "./pages/downloads/downloads";
+import Workshop from "./pages/workshop/workshop";
 import GameDetails from "./pages/game-details/game-details";
 import Settings from "./pages/settings/settings";
 import Profile from "./pages/profile/profile";
@@ -138,6 +139,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
               <Routes>
                 <Route element={<App />}>
                   <Route path="/" element={<Home />} />
+                  <Route path="/workshop" element={<Workshop />} />
                   <Route path="/catalogue" element={<Catalogue />} />
                   <Route path="/library" element={<Library />} />
                   <Route path="/downloads" element={<Downloads />} />

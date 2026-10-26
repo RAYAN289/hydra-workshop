@@ -942,6 +942,7 @@ export * from "./retroarch.types";
 export * from "./artwork.types";
 export * from "./cloud-save.types";
 export * from "./souvenir.types";
+export * from "./workshop.types";
 
 export type ExtractionFailure =
   | { reason: "unsupported-format"; format: string }

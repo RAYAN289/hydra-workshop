@@ -2,6 +2,7 @@
 // https://www.electronjs.org/docs/latest/tutorial/process-model#preload-scripts
 import { contextBridge, ipcRenderer } from "electron";
 import { randomUUID } from "node:crypto";
+import type { WorkshopState, WorkshopResult } from "@types";
 
 import type {
   SystemPowerAction,
@@ -164,6 +165,27 @@ const invokeGameArtifactExport = async (
 };
 
 contextBridge.exposeInMainWorld("electron", {
+  getWorkshopState: () =>
+    ipcRenderer.invoke("getWorkshopState") as Promise<WorkshopState>,
+  installWorkshopSteamCMD: () =>
+    ipcRenderer.invoke("installWorkshopSteamCMD") as Promise<WorkshopResult>,
+  downloadWorkshopItem: (input: string) =>
+    ipcRenderer.invoke(
+      "downloadWorkshopItem",
+      input
+    ) as Promise<WorkshopResult>,
+  cancelWorkshopOperation: () =>
+    ipcRenderer.invoke("cancelWorkshopOperation") as Promise<WorkshopState>,
+  openWorkshopFolder: () =>
+    ipcRenderer.invoke("openWorkshopFolder") as Promise<string>,
+  onWorkshopStateChanged: (callback: (state: WorkshopState) => void) => {
+    const listener = (
+      _event: Electron.IpcRendererEvent,
+      state: WorkshopState
+    ) => callback(state);
+    ipcRenderer.on("workshopStateChanged", listener);
+    return () => ipcRenderer.removeListener("workshopStateChanged", listener);
+  },
   onCloudSaveAutomaticSyncModeChanged: (
     callback: (event: CloudSaveAutomaticSyncModeChangedEvent) => void
   ) => {

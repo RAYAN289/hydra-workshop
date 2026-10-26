@@ -1,4 +1,5 @@
 import type { AuthPage, Downloader } from "@shared";
+import type { WorkshopState, WorkshopResult } from "@types";
 import type {
   SystemPowerAction,
   AppUpdaterEvent,
@@ -170,6 +171,14 @@ declare global {
   };
 
   interface Electron {
+    getWorkshopState: () => Promise<WorkshopState>;
+    installWorkshopSteamCMD: () => Promise<WorkshopResult>;
+    downloadWorkshopItem: (input: string) => Promise<WorkshopResult>;
+    cancelWorkshopOperation: () => Promise<WorkshopState>;
+    openWorkshopFolder: () => Promise<string>;
+    onWorkshopStateChanged: (
+      callback: (state: WorkshopState) => void
+    ) => () => void;
     onCloudSaveAutomaticSyncModeChanged: (
       callback: (event: CloudSaveAutomaticSyncModeChangedEvent) => void
     ) => () => void;
