@@ -71,6 +71,7 @@ const CHAT_WINDOW_MIN_SIZE = { width: 400, height: 420 };
 
 interface CreateMainWindowOptions {
   forceBigPicture?: boolean;
+  initialHash?: string;
 }
 
 export class WindowManager {
@@ -434,7 +435,9 @@ export class WindowManager {
       }
     );
 
-    const initialHash = userPreferences?.launchToLibraryPage ? "library" : "";
+    const initialHash =
+      options?.initialHash ??
+      (userPreferences?.launchToLibraryPage ? "library" : "");
 
     this.loadMainWindowURL(initialHash);
     mainWindow.removeMenu();

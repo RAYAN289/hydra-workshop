@@ -1,5 +1,13 @@
 import type { AuthPage, Downloader } from "@shared";
-import type { WorkshopState, WorkshopResult, WorkshopInspection } from "@types";
+import type {
+  WorkshopState,
+  WorkshopResult,
+  WorkshopInspection,
+  WorkshopLibraryState,
+  WorkshopBrowseResult,
+  WorkshopPack,
+  WorkshopCatalogueItem,
+} from "@types";
 import type {
   SystemPowerAction,
   AppUpdaterEvent,
@@ -171,6 +179,33 @@ declare global {
   };
 
   interface Electron {
+    importLocalWorkshopMods: (appId: string) => Promise<WorkshopLibraryState>;
+    browseWorkshop: (input: {
+      appId: string;
+      search?: string;
+      page?: number;
+      sort?: string;
+    }) => Promise<WorkshopBrowseResult>;
+    getWorkshopGames: () => Promise<{ appId: string; name: string }[]>;
+    getWorkshopLibrary: () => Promise<WorkshopLibraryState>;
+    enqueueWorkshopItems: (
+      appId: string,
+      ids: string[]
+    ) => Promise<WorkshopLibraryState>;
+    cancelWorkshopQueue: () => Promise<WorkshopLibraryState>;
+    chooseWorkshopTarget: (appId: string) => Promise<WorkshopLibraryState>;
+    shareWorkshopPack: (appId: string, ids: string[]) => Promise<string>;
+    inspectWorkshopPack: (
+      link: string
+    ) => Promise<{ pack: WorkshopPack; items: WorkshopCatalogueItem[] }>;
+    openWorkshopItemFolder: (appId: string, id: string) => Promise<string>;
+    removeWorkshopItem: (
+      appId: string,
+      id: string
+    ) => Promise<WorkshopLibraryState>;
+    onWorkshopLibraryChanged: (
+      callback: (state: WorkshopLibraryState) => void
+    ) => () => void;
     getWorkshopState: () => Promise<WorkshopState>;
     inspectWorkshopItem: (input: string) => Promise<WorkshopInspection | null>;
     installWorkshopSteamCMD: () => Promise<WorkshopResult>;

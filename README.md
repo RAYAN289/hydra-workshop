@@ -6,7 +6,7 @@
 
 ## Hydra Workshop — community fork
 
-This fork adds **Steam Workshop downloads through SteamCMD**, with automatic game identification from pasted links, Hydra library matching and installed Steam game detection. The English/Arabic page includes installation from Valve, live output, cancellation and a download-folder button. Open **Workshop** in the sidebar. Mod installation and activation still follow each game's requirements.
+This fork adds an **internal Steam Workshop browser** with searchable cards, one-click queued SteamCMD downloads, automatic SteamCMD setup, an optional local mod destination and saved mod records. Select downloaded mods to share a pack link; recipients can review and download the selected items together. The interface supports English and Arabic. Open **Workshop** beside a game's Play button or in the sidebar. Steam download access and game-specific mod activation still apply.
 
 See [Workshop setup, limits and development](docs/workshop.md). Windows only in this first version; some games do not allow anonymous downloads. This is an independent community fork of Hydra Launcher.
 

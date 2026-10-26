@@ -110,8 +110,8 @@ export function HeroPanelActions() {
       title={t(steamWorkshopGame ? "open_workshop" : "workshop_no_steam_id")}
       onClick={() => {
         if (steamWorkshopGame) {
-          void window.electron.openExternal(
-            `https://steamcommunity.com/app/${steamWorkshopGame.objectId}/workshop/`
+          navigate(
+            `/workshop?appId=${steamWorkshopGame.objectId}&title=${encodeURIComponent(gameTitle)}`
           );
         }
       }}

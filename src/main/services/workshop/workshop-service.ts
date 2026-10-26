@@ -207,6 +207,8 @@ class WorkshopService {
     this.log(`Detected game: ${game.name ?? "Steam App"} (App ${game.appId})`);
     if (game.location) this.log(`Game location: ${game.location.path}`);
     this.log(`${item.title} (App ${item.appId})`);
+    const receipt = this.receiptPath(item.appId, item.id);
+    await fs.rm(receipt, { force: true });
     const output = await runSteamCommand({
       executable: this.executable,
       args: workshopDownloadArgs(item),
@@ -224,6 +226,15 @@ class WorkshopService {
     );
     const files = await fs.readdir(downloadPath);
     if (!files.length) throw new WorkshopError("download-failed");
+    await fs.mkdir(path.dirname(receipt), { recursive: true });
+    await fs.writeFile(
+      receipt,
+      JSON.stringify({
+        appId: item.appId,
+        id: item.id,
+        completedAt: Date.now(),
+      })
+    );
     this.log(`Saved to ${downloadPath}`);
     this.update({ phase: "completed", downloadPath });
   }
@@ -262,6 +273,35 @@ class WorkshopService {
 
   public install() {
     return this.start("install");
+  }
+  private receiptPath(appId: string, id: string) {
+    return path.join(
+      app.getPath("userData"),
+      "workshop",
+      "receipts",
+      appId,
+      `${id}.json`
+    );
+  }
+  public async isDownloadComplete(appId: string, id: string) {
+    if (!/^[1-9]\d{0,9}$/.test(appId) || !/^[1-9]\d{0,19}$/.test(id))
+      return false;
+    try {
+      const receipt = JSON.parse(
+        await fs.readFile(this.receiptPath(appId, id), "utf8")
+      );
+      return (
+        receipt.appId === appId &&
+        receipt.id === id &&
+        (
+          await fs.readdir(
+            path.join(this.root, "steamapps", "workshop", "content", appId, id)
+          )
+        ).length > 0
+      );
+    } catch {
+      return false;
+    }
   }
   public download(input: unknown) {
     return this.start("download", input);

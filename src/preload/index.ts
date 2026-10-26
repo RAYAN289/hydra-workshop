@@ -2,7 +2,15 @@
 // https://www.electronjs.org/docs/latest/tutorial/process-model#preload-scripts
 import { contextBridge, ipcRenderer } from "electron";
 import { randomUUID } from "node:crypto";
-import type { WorkshopState, WorkshopResult, WorkshopInspection } from "@types";
+import type {
+  WorkshopState,
+  WorkshopResult,
+  WorkshopInspection,
+  WorkshopLibraryState,
+  WorkshopBrowseResult,
+  WorkshopPack,
+  WorkshopCatalogueItem,
+} from "@types";
 
 import type {
   SystemPowerAction,
@@ -165,6 +173,65 @@ const invokeGameArtifactExport = async (
 };
 
 contextBridge.exposeInMainWorld("electron", {
+  importLocalWorkshopMods: (appId: string) =>
+    ipcRenderer.invoke(
+      "importLocalWorkshopMods",
+      appId
+    ) as Promise<WorkshopLibraryState>,
+  browseWorkshop: (input: {
+    appId: string;
+    search?: string;
+    page?: number;
+    sort?: string;
+  }) =>
+    ipcRenderer.invoke(
+      "browseWorkshop",
+      input
+    ) as Promise<WorkshopBrowseResult>,
+  getWorkshopGames: () =>
+    ipcRenderer.invoke("getWorkshopGames") as Promise<
+      { appId: string; name: string }[]
+    >,
+  getWorkshopLibrary: () =>
+    ipcRenderer.invoke("getWorkshopLibrary") as Promise<WorkshopLibraryState>,
+  enqueueWorkshopItems: (appId: string, ids: string[]) =>
+    ipcRenderer.invoke(
+      "enqueueWorkshopItems",
+      appId,
+      ids
+    ) as Promise<WorkshopLibraryState>,
+  cancelWorkshopQueue: () =>
+    ipcRenderer.invoke("cancelWorkshopQueue") as Promise<WorkshopLibraryState>,
+  chooseWorkshopTarget: (appId: string) =>
+    ipcRenderer.invoke(
+      "chooseWorkshopTarget",
+      appId
+    ) as Promise<WorkshopLibraryState>,
+  shareWorkshopPack: (appId: string, ids: string[]) =>
+    ipcRenderer.invoke("shareWorkshopPack", appId, ids) as Promise<string>,
+  inspectWorkshopPack: (link: string) =>
+    ipcRenderer.invoke("inspectWorkshopPack", link) as Promise<{
+      pack: WorkshopPack;
+      items: WorkshopCatalogueItem[];
+    }>,
+  openWorkshopItemFolder: (appId: string, id: string) =>
+    ipcRenderer.invoke("openWorkshopItemFolder", appId, id) as Promise<string>,
+  removeWorkshopItem: (appId: string, id: string) =>
+    ipcRenderer.invoke(
+      "removeWorkshopItem",
+      appId,
+      id
+    ) as Promise<WorkshopLibraryState>,
+  onWorkshopLibraryChanged: (
+    callback: (state: WorkshopLibraryState) => void
+  ) => {
+    const listener = (
+      _event: Electron.IpcRendererEvent,
+      state: WorkshopLibraryState
+    ) => callback(state);
+    ipcRenderer.on("workshopLibraryChanged", listener);
+    return () => ipcRenderer.removeListener("workshopLibraryChanged", listener);
+  },
   getWorkshopState: () =>
     ipcRenderer.invoke("getWorkshopState") as Promise<WorkshopState>,
   inspectWorkshopItem: (input: string) =>

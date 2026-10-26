@@ -1,0 +1,335 @@
+@use "../../scss/globals.scss";
+.workshop-browser {
+  &__tools {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    details {
+      border: 1px solid globals.$border-color;
+      border-radius: 8px;
+      padding: 10px 14px;
+      summary {
+        font-size: 12px;
+        cursor: pointer;
+      }
+      &[open] {
+        flex: 1 1 100%;
+        summary {
+          margin-bottom: 16px;
+        }
+      }
+    }
+  }
+  width: 100%;
+  max-width: 1480px;
+  margin: 0 auto;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    h1 {
+      font-size: 28px;
+      color: globals.$muted-color;
+      margin: 8px 0 12px;
+    }
+    p {
+      line-height: 1.7;
+    }
+    svg {
+      flex-shrink: 0;
+      color: #dbc984;
+    }
+  }
+  &__eyebrow {
+    font-size: 13px;
+    color: #c9baf7;
+    font-weight: 600;
+  }
+  &__game-picker,
+  &__toolbar,
+  &__import,
+  &__settings,
+  &__selection,
+  &__footer,
+  &__queue {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  &__game-picker {
+    label {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 12px;
+      flex: 1;
+    }
+    form {
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+      flex: 1;
+    }
+    .text-field-container {
+      flex: 1;
+    }
+  }
+  select,
+  input,
+  textarea {
+    font: inherit;
+    color: inherit;
+  }
+  select {
+    background: globals.$dark-background-color;
+    border: 1px solid globals.$border-color;
+    border-radius: 8px;
+    padding: 12px;
+    max-width: 100%;
+  }
+  &__import {
+    align-items: flex-end;
+    .text-field-container {
+      flex: 1;
+      min-width: 240px;
+    }
+    .button {
+      flex-shrink: 0;
+    }
+  }
+  &__search {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    min-width: 200px;
+    background: globals.$dark-background-color;
+    border: 1px solid globals.$border-color;
+    border-radius: 10px;
+    padding: 12px 16px;
+    input {
+      width: 100%;
+      border: 0;
+      background: transparent;
+      outline: 0;
+    }
+  }
+  &__settings {
+    justify-content: space-between;
+    font-size: 12px;
+    line-height: 1.7;
+    p {
+      flex: 1;
+      min-width: 200px;
+      overflow-wrap: anywhere;
+      color: #b8bdc7;
+    }
+  }
+  &__selection,
+  &__queue {
+    background: rgba(221, 193, 112, 0.08);
+    border: 1px solid rgba(221, 193, 112, 0.35);
+    border-radius: 12px;
+    padding: 16px;
+  }
+  &__queue {
+    > div {
+      flex: 1;
+      min-width: 150px;
+    }
+    p {
+      font-size: 12px;
+      line-height: 1.6;
+      margin-top: 6px;
+    }
+  }
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+  }
+  &__card {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid globals.$border-color;
+    border-radius: 16px;
+    h2 {
+      font-size: 17px;
+      line-height: 1.45;
+      overflow-wrap: anywhere;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    > .button {
+      width: 100%;
+    }
+    &--selected {
+      border-color: #e1bd61;
+    }
+  }
+  &__art {
+    position: relative;
+    aspect-ratio: 16/10;
+    display: grid;
+    place-items: center;
+    background: rgba(255, 255, 255, 0.025);
+    border-radius: 8px;
+    overflow: hidden;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+  &__check {
+    position: absolute;
+    inset-inline-end: 8px;
+    top: 8px;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 6px;
+    padding: 7px 9px;
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    font-size: 12px;
+    cursor: pointer;
+    input {
+      accent-color: #e7c469;
+    }
+  }
+  &__description {
+    font-size: 12px;
+    line-height: 1.7;
+    color: #adb4c1;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 60px;
+  }
+  &__meta {
+    font-size: 11px;
+    color: #98a3b5;
+    margin-top: auto;
+    overflow-wrap: anywhere;
+  }
+  &__card-actions {
+    display: flex;
+    gap: 8px;
+    .button {
+      flex: 1;
+      min-width: 0;
+      padding-inline: 10px;
+    }
+  }
+  &__install.button {
+    background: linear-gradient(105deg, #efd67e, #bb8b21);
+    color: #211b0a;
+    border: 0;
+  }
+  &__status {
+    font-size: 12px;
+    color: #cabd8a;
+    &--failed {
+      color: #ffadb6;
+    }
+    &--installed,
+    &--downloaded {
+      color: #a1d5af;
+    }
+  }
+  &__error,
+  &__item-error {
+    line-height: 1.7;
+    font-size: 12px;
+    color: #ffadb6;
+    overflow-wrap: anywhere;
+  }
+  &__error {
+    padding: 16px;
+    border: 1px solid #b84e5b;
+    border-radius: 8px;
+  }
+  &__footer {
+    justify-content: space-between;
+    font-size: 12px;
+  }
+  &__empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 60px 20px;
+    gap: 16px;
+    line-height: 1.7;
+    color: #b8bdc7;
+  }
+  &__advanced {
+    font-size: 12px;
+    line-height: 1.8;
+    summary {
+      cursor: pointer;
+    }
+    p {
+      margin: 12px 0;
+    }
+    a {
+      text-decoration: underline;
+    }
+    pre {
+      max-height: 200px;
+      overflow: auto;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      background: globals.$dark-background-color;
+      padding: 12px;
+      margin-top: 12px;
+    }
+  }
+  &__pack {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 600px;
+    ul {
+      padding-inline-start: 20px;
+      max-height: 300px;
+      overflow: auto;
+      line-height: 1.9;
+    }
+    textarea {
+      width: 100%;
+      background: globals.$dark-background-color;
+      border: 1px solid globals.$border-color;
+      border-radius: 8px;
+      padding: 14px;
+      resize: vertical;
+      color: globals.$muted-color;
+    }
+    p {
+      font-size: 13px;
+      line-height: 1.7;
+    }
+  }
+  @media (max-width: 700px) {
+    padding: 24px 16px;
+    &__header h1 {
+      font-size: 23px;
+    }
+    &__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+}

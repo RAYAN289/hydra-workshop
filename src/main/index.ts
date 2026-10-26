@@ -46,6 +46,8 @@ import {
   parseSteamOpenIdReturn,
 } from "./services/steam-integration/steam-openid-return";
 import { steamSyncOrchestrator } from "./services/steam-integration/steam-sync-orchestrator";
+import { parseWorkshopPackLink } from "./services/workshop/workshop-library-core";
+import { workshopLibrary } from "./services/workshop/workshop-library";
 import {
   initializeEpicIntegration,
   shutdownEpicIntegration,
@@ -220,17 +222,29 @@ const initializeApp = async () => {
   );
   const forceBigPicture = process.argv.includes("--big-picture");
   const isRunDeepLink = deepLinkArg?.startsWith(`${PROTOCOL}://run`);
+  let workshopHash: string | undefined;
+  if (deepLinkArg?.startsWith(`${PROTOCOL}://workshop?`)) {
+    try {
+      const pack = parseWorkshopPackLink(deepLinkArg);
+      workshopHash = `workshop?appId=${pack.appId}&pack=${encodeURIComponent(deepLinkArg)}`;
+    } catch {
+      /* Invalid packs never trigger downloads. */
+    }
+  }
 
   await loadSocialWindowsBounds();
 
   if (!process.argv.includes("--hidden") && !isRunDeepLink) {
-    WindowManager.createMainWindow({ forceBigPicture });
+    await WindowManager.createMainWindow({
+      forceBigPicture,
+      initialHash: workshopHash,
+    });
     if (!forceBigPicture) void restoreSocialWindows();
   }
 
   WindowManager.createSystemTray(language || "en");
 
-  if (deepLinkArg) {
+  if (deepLinkArg && !workshopHash) {
     handleDeepLinkPath(deepLinkArg);
   }
 };
@@ -305,6 +319,14 @@ const handleDeepLinkPath = (uri?: string) => {
 
   try {
     const url = new URL(uri);
+
+    if (url.protocol === `${PROTOCOL}:` && url.host === "workshop") {
+      const pack = parseWorkshopPackLink(uri);
+      WindowManager.redirect(
+        `workshop?appId=${pack.appId}&pack=${encodeURIComponent(uri)}`
+      );
+      return;
+    }
 
     if (url.host === "run") {
       const shop = url.searchParams.get("shop") as GameShop | null;
@@ -410,6 +432,11 @@ app.on("before-quit", async (e) => {
     e.preventDefault();
     if (isAppClosing) return;
     isAppClosing = true;
+    await workshopLibrary
+      .cancel()
+      .catch(() =>
+        logger.warn("Could not persist Workshop queue while closing")
+      );
     await saveSocialWindowsSession();
     try {
       await shutdownEpicIntegration();

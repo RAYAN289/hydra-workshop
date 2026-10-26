@@ -60,3 +60,42 @@ export interface WorkshopResult {
   error?: WorkshopErrorCode;
   state: WorkshopState;
 }
+
+export interface WorkshopCatalogueItem extends WorkshopItem {
+  description: string;
+  previewUrl: string | null;
+  size: number;
+  updatedAt: number;
+}
+
+export interface WorkshopBrowseResult {
+  items: WorkshopCatalogueItem[];
+  total: number;
+  page: number;
+  hasMore: boolean;
+}
+
+export type WorkshopModStatus =
+  | "queued"
+  | "downloading"
+  | "downloaded"
+  | "installed"
+  | "failed"
+  | "cancelled";
+export interface WorkshopMod {
+  item: WorkshopCatalogueItem;
+  status: WorkshopModStatus;
+  error: string | null;
+  updatedAt: number;
+}
+export interface WorkshopLibraryState {
+  revision: number;
+  mods: WorkshopMod[];
+  activeId: string | null;
+  targets: Record<string, string>;
+}
+export interface WorkshopPack {
+  version: 1;
+  appId: string;
+  itemIds: string[];
+}
