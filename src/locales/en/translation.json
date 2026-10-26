@@ -2796,7 +2796,7 @@
   },
   "workshop": {
     "title": "Download Workshop items",
-    "description": "Paste a Steam Workshop item link to download its files with SteamCMD. Open the folder to install and manage the mod yourself.",
+    "description": "Paste a Steam Workshop item link. The launcher identifies its game automatically and matches it to your Hydra and Steam libraries.",
     "browse": "Visit Steam Workshop",
     "loading": "Checking SteamCMD…",
     "windows_only": "Workshop downloads are currently available on Windows.",
@@ -2835,6 +2835,16 @@
       "download-failed": "SteamCMD could not download this item. It may require a Steam account or game ownership, be restricted, or be unavailable. Check the output above.",
       "connection": "Could not connect to the Workshop service. Reopen this page and try again.",
       "folder": "Could not open the download folder."
-    }
+    },
+    "identifying": "Identifying the game…",
+    "detected_game": "Game detected automatically",
+    "unknown_game": "Steam App {{appId}}",
+    "library_match": "Matched in your Hydra library",
+    "library_not_found": "Not in your Hydra library",
+    "game_directory": "Installed Steam game folder",
+    "executable_directory": "Game executable folder",
+    "location_not_found": "No local game location found. The game is still identified by its Steam App ID.",
+    "identified_hint": "Files are grouped by game automatically. Installing and enabling mods follows each game’s own requirements.",
+    "belongs_to": "For {{game}}"
   }
 }

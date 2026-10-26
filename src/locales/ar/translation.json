@@ -1229,7 +1229,7 @@
   },
   "workshop": {
     "title": "تحميل عناصر Workshop",
-    "description": "الصق رابط عنصر من Steam Workshop لتحميل ملفاته باستخدام SteamCMD. افتح المجلد لتثبيت المود وإدارة ملفاته بنفسك.",
+    "description": "الصق رابط عنصر من Steam Workshop. يتعرف البرنامج على لعبته تلقائيًا ويطابقها مع مكتبتي Hydra وSteam عندك.",
     "browse": "زيارة Steam Workshop",
     "loading": "جارٍ التحقق من SteamCMD…",
     "windows_only": "تحميل عناصر Workshop متاح حاليًا على ويندوز.",
@@ -1268,6 +1268,16 @@
       "download-failed": "تعذّر تحميل العنصر عبر SteamCMD. قد يتطلب حساب Steam أو امتلاك اللعبة، أو يكون مقيّدًا أو غير متاح. راجع السجل أعلاه.",
       "connection": "تعذّر الاتصال بخدمة Workshop. أعد فتح الصفحة وحاول مجددًا.",
       "folder": "تعذّر فتح مجلد التحميل."
-    }
+    },
+    "identifying": "جارٍ التعرف على اللعبة…",
+    "detected_game": "تم التعرف على اللعبة تلقائيًا",
+    "unknown_game": "لعبة Steam برقم {{appId}}",
+    "library_match": "موجودة في مكتبة Hydra عندك",
+    "library_not_found": "غير موجودة في مكتبة Hydra عندك",
+    "game_directory": "مجلد اللعبة المثبتة في Steam",
+    "executable_directory": "مجلد ملف تشغيل اللعبة",
+    "location_not_found": "لم يتم العثور على مكان اللعبة على جهازك. تم التعرف عليها برقمها في Steam.",
+    "identified_hint": "تُرتب الملفات حسب لعبتها تلقائيًا. تركيب المود وتفعيله يعتمد على طريقة دعم كل لعبة للمودات.",
+    "belongs_to": "خاص بلعبة {{game}}"
   }
 }

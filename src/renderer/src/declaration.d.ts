@@ -1,5 +1,5 @@
 import type { AuthPage, Downloader } from "@shared";
-import type { WorkshopState, WorkshopResult } from "@types";
+import type { WorkshopState, WorkshopResult, WorkshopInspection } from "@types";
 import type {
   SystemPowerAction,
   AppUpdaterEvent,
@@ -172,6 +172,7 @@ declare global {
 
   interface Electron {
     getWorkshopState: () => Promise<WorkshopState>;
+    inspectWorkshopItem: (input: string) => Promise<WorkshopInspection | null>;
     installWorkshopSteamCMD: () => Promise<WorkshopResult>;
     downloadWorkshopItem: (input: string) => Promise<WorkshopResult>;
     cancelWorkshopOperation: () => Promise<WorkshopState>;

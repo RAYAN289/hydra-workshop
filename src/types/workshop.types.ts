@@ -25,6 +25,21 @@ export interface WorkshopItem {
   title: string;
 }
 
+export interface WorkshopGame {
+  appId: string;
+  name: string | null;
+  inHydraLibrary: boolean;
+  location: {
+    path: string;
+    kind: "steam-install" | "hydra-executable";
+  } | null;
+}
+
+export interface WorkshopInspection {
+  item: WorkshopItem;
+  game: WorkshopGame;
+}
+
 export interface WorkshopState {
   revision: number;
   supported: boolean;
@@ -33,6 +48,7 @@ export interface WorkshopState {
   phase: WorkshopPhase;
   operation: "install" | "download" | null;
   item: WorkshopItem | null;
+  game: WorkshopGame | null;
   contentPath: string;
   downloadPath: string | null;
   error: WorkshopErrorCode | null;

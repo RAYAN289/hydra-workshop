@@ -10,7 +10,7 @@ import {
   Package,
 } from "lucide-react";
 import { Button, TextField } from "@renderer/components";
-import type { WorkshopResult, WorkshopState } from "@types";
+import type { WorkshopInspection, WorkshopResult, WorkshopState } from "@types";
 import "./workshop.scss";
 
 export default function Workshop() {
@@ -19,6 +19,8 @@ export default function Workshop() {
   const [input, setInput] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
+  const [inspection, setInspection] = useState<WorkshopInspection | null>(null);
+  const [identifying, setIdentifying] = useState(false);
   const logsRef = useRef<HTMLPreElement>(null);
   const applyState = useCallback((next: WorkshopState) => {
     setState((previous) =>
@@ -50,6 +52,29 @@ export default function Workshop() {
       logsRef.current.scrollTop = logsRef.current.scrollHeight;
   }, [state?.logs]);
 
+  useEffect(() => {
+    let current = true;
+    setInspection(null);
+    setIdentifying(false);
+    if (!input.trim()) return;
+    const timer = setTimeout(() => {
+      setIdentifying(true);
+      window.electron
+        .inspectWorkshopItem(input.trim())
+        .then((result) => {
+          if (current) setInspection(result);
+        })
+        .catch(() => {})
+        .finally(() => {
+          if (current) setIdentifying(false);
+        });
+    }, 800);
+    return () => {
+      current = false;
+      clearTimeout(timer);
+    };
+  }, [input]);
+
   const run = async (action: () => Promise<WorkshopResult>) => {
     setError(null);
     setPending(true);
@@ -74,6 +99,8 @@ export default function Workshop() {
 
   const busy = pending || !!state?.busy;
   const displayError = error ?? state?.error;
+  const game =
+    inspection?.game ?? (state?.busy || !input.trim() ? state?.game : null);
 
   return (
     <section className="workshop">
@@ -146,8 +173,38 @@ export default function Workshop() {
               autoComplete="off"
               spellCheck={false}
               maxLength={2048}
-              disabled={busy || !state.installed}
+              disabled={busy}
             />
+            {identifying && <p role="status">{t("identifying")}</p>}
+            {game && (
+              <div className="workshop__game" aria-live="polite">
+                <span>{t("detected_game")}</span>
+                <strong>
+                  {game.name ?? t("unknown_game", { appId: game.appId })}
+                </strong>
+                <span>Steam App ID: {game.appId}</span>
+                <p>
+                  {t(
+                    game.inHydraLibrary ? "library_match" : "library_not_found"
+                  )}
+                </p>
+                {game.location ? (
+                  <>
+                    <span>
+                      {t(
+                        game.location.kind === "steam-install"
+                          ? "game_directory"
+                          : "executable_directory"
+                      )}
+                    </span>
+                    <code dir="ltr">{game.location.path}</code>
+                  </>
+                ) : (
+                  <p>{t("location_not_found")}</p>
+                )}
+                <p className="workshop__hint">{t("identified_hint")}</p>
+              </div>
+            )}
             <div className="workshop__actions">
               <Button
                 type="submit"
@@ -179,6 +236,14 @@ export default function Workshop() {
                 <div role="status" aria-live="polite">
                   <strong>{t(`phase.${state.phase}`)}</strong>
                   {state.item && <p>{state.item.title}</p>}
+                  {state.game && (
+                    <p>
+                      {t("belongs_to", {
+                        game:
+                          state.game.name ?? `Steam App ${state.game.appId}`,
+                      })}
+                    </p>
+                  )}
                 </div>
                 {state.busy && (
                   <Button

@@ -6,7 +6,7 @@ Community fork of [Hydra Launcher](https://github.com/hydralauncher/hydra) with 
 
 1. Open **Workshop** in the sidebar.
 2. Select **Install SteamCMD**. The app downloads the Windows bootstrap archive directly from Valve and runs its first update.
-3. Paste one Steam Community Workshop item URL, or its numeric published file ID.
+3. Paste one Steam Community Workshop item URL, or its numeric published file ID. The page identifies the game automatically before downloading; SteamCMD is not required for this preview.
 4. Select **Send link to SteamCMD**. Live SteamCMD output appears below the form.
 5. When complete, select **Open download folder**. Install the files according to the mod author's instructions.
 
@@ -18,7 +18,9 @@ The interface is translated into English and Arabic. Other Hydra languages fall 
 - Uses `+login anonymous +workshop_download_item <appId> <itemId> validate +quit`.
 - Some games restrict Workshop downloads to signed-in accounts that own the game. This version does not sign in to Steam or bypass those restrictions.
 - Downloads individual items. Collections display a specific message asking for an individual item link.
-- Mod installation, dependencies and load order remain manual.
+- Identification uses Steam's `consumer_app_id`, never the mod's filename, title, or creator app ID. It works for public individual items whose Steam metadata is available, including games absent from your library. Game names fall back to Steam App ID if name lookup fails.
+- The game is matched against non-deleted Hydra entries by Steam ID or an explicit Steam catalogue link. The launcher also reads installed Steam manifests to locate the game. Hydra executable locations are validated and labelled as executable folders, since they can be nested below the game's root. No filename or title guesses are used.
+- Downloads are automatically grouped by `<appId>/<itemId>`. Identifying a game does not install or activate the mod. Installation, dependencies and load order remain manual; universal automatic installation requires game-specific support.
 - Files live in `<userData>/workshop/steamcmd/steamapps/workshop/content/<appId>/<itemId>/`.
 - The fork has its own app name, application ID, data directory, `hydralauncher-workshop` launch protocol and update feed. It does not migrate the original Hydra library.
 - One Workshop operation runs at a time. Changing pages does not stop it. Reopening the page restores its state and recent output. Exiting the launcher cancels the active process; unfinished files are preserved for SteamCMD to validate on retry.

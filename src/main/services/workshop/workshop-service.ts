@@ -2,8 +2,9 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import axios from "axios";
 import { app, BrowserWindow, shell } from "electron";
-import type { WorkshopResult, WorkshopState } from "@types";
+import type { WorkshopInspection, WorkshopResult, WorkshopState } from "@types";
 import { SevenZip } from "../7zip";
+import { resolveWorkshopGame } from "./workshop-game";
 import {
   WorkshopError,
   hasWorkshopDownloadSuccess,
@@ -56,6 +57,7 @@ class WorkshopService {
         phase: "idle",
         operation: null,
         item: null,
+        game: null,
         contentPath: path.join(this.root, "steamapps", "workshop", "content"),
         downloadPath: null,
         error: null,
@@ -117,6 +119,7 @@ class WorkshopService {
       phase: operation === "install" ? "installing" : "resolving",
       operation,
       item: null,
+      game: null,
       error: null,
       logs: [],
       downloadPath: null,
@@ -198,29 +201,11 @@ class WorkshopService {
     }
 
     this.log(`Fetching Workshop item ${itemId} from Steam...`);
-    let data: unknown;
-    try {
-      const response = await axios.post(
-        DETAILS_URL,
-        new URLSearchParams({
-          itemcount: "1",
-          "publishedfileids[0]": itemId!,
-        }).toString(),
-        {
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          signal,
-          timeout: 30_000,
-          maxContentLength: 2 * 1024 * 1024,
-        }
-      );
-      data = response.data;
-    } catch (error) {
-      if (signal.aborted) throw error;
-      throw new WorkshopError("network");
-    }
+    const { item, game } = await this.inspect(itemId, signal);
     signal.throwIfAborted();
-    const item = parseWorkshopDetails(data, itemId!);
-    this.update({ item, phase: "downloading" });
+    this.update({ item, game, phase: "downloading" });
+    this.log(`Detected game: ${game.name ?? "Steam App"} (App ${game.appId})`);
+    if (game.location) this.log(`Game location: ${game.location.path}`);
     this.log(`${item.title} (App ${item.appId})`);
     const output = await runSteamCommand({
       executable: this.executable,
@@ -241,6 +226,38 @@ class WorkshopService {
     if (!files.length) throw new WorkshopError("download-failed");
     this.log(`Saved to ${downloadPath}`);
     this.update({ phase: "completed", downloadPath });
+  }
+
+  public async inspect(
+    input: unknown,
+    signal?: AbortSignal
+  ): Promise<WorkshopInspection> {
+    const itemId = parseWorkshopItemId(input);
+    let data: unknown;
+    try {
+      const response = await axios.post(
+        DETAILS_URL,
+        new URLSearchParams({
+          itemcount: "1",
+          "publishedfileids[0]": itemId!,
+        }).toString(),
+        {
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          signal,
+          timeout: 30_000,
+          maxContentLength: 2 * 1024 * 1024,
+        }
+      );
+      data = response.data;
+    } catch (error) {
+      if (signal?.aborted) throw error;
+      throw new WorkshopError("network");
+    }
+    signal?.throwIfAborted();
+    const item = parseWorkshopDetails(data, itemId);
+    const game = await resolveWorkshopGame(item.appId, signal);
+    signal?.throwIfAborted();
+    return { item, game };
   }
 
   public install() {

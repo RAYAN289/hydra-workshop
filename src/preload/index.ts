@@ -2,7 +2,7 @@
 // https://www.electronjs.org/docs/latest/tutorial/process-model#preload-scripts
 import { contextBridge, ipcRenderer } from "electron";
 import { randomUUID } from "node:crypto";
-import type { WorkshopState, WorkshopResult } from "@types";
+import type { WorkshopState, WorkshopResult, WorkshopInspection } from "@types";
 
 import type {
   SystemPowerAction,
@@ -167,6 +167,11 @@ const invokeGameArtifactExport = async (
 contextBridge.exposeInMainWorld("electron", {
   getWorkshopState: () =>
     ipcRenderer.invoke("getWorkshopState") as Promise<WorkshopState>,
+  inspectWorkshopItem: (input: string) =>
+    ipcRenderer.invoke(
+      "inspectWorkshopItem",
+      input
+    ) as Promise<WorkshopInspection | null>,
   installWorkshopSteamCMD: () =>
     ipcRenderer.invoke("installWorkshopSteamCMD") as Promise<WorkshopResult>,
   downloadWorkshopItem: (input: string) =>
